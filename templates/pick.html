@@ -160,25 +160,7 @@
                                         role="tab"
                                         id="headingOne"
                                     >
-                                        <form
-                                            method="POST"
-                                            action="/ind-analyze-1"
-                                        >
-                                            <input
-                                                id="submit1"
-                                                type="submit"
-                                                class="panel-title collapsed"
-                                                style="display: none"
-                                            />
-                                            <label for="submit1">
-                                                <h6
-                                                    id="btn1"
-                                                    class="panel-title-edit mbr-semibold mbr-fonts-style mb-0 display-5"
-                                                >
-                                                    업종분석
-                                                </h6>
-                                            </label>
-                                        </form>
+                                        <a href="/ind-analyze-1">업종 분석</a>
                                     </div>
                                 </div>
                                 <div class="card mb-3">
@@ -187,18 +169,7 @@
                                         role="tab"
                                         id="headingOne"
                                     >
-                                        <a
-                                            role="button"
-                                            class="panel-title collapsed"
-                                            href="/"
-                                        >
-                                            <h6
-                                                id="btn1"
-                                                class="panel-title-edit mbr-semibold mbr-fonts-style mb-0 display-5"
-                                            >
-                                                상권분석
-                                            </h6>
-                                        </a>
+                                        <a href="/loc-analyze-1">상권 분석</a>
                                     </div>
                                 </div>
                                 <div class="card mb-3">
@@ -369,8 +340,6 @@
         <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/mbr-switch-arrow/mbr-switch-arrow.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/theme/js/script.js')}}"></script>
-
-        <input name="animation" type="hidden" />
     </body>
     {% endblock %}
 </html>

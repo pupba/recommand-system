@@ -43,3 +43,6 @@ industry = {
     76: '애완동물',
     77: '생활기타'
 }
+
+major_list = [str(industry[i]) for i in industry]
+

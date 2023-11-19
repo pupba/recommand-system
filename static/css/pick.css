@@ -1,6 +1,6 @@
 @font-face {
     font-family: "NEXON"; /* 사용하고 싶은 font-family명을 지정 */
-    src: url("../font/NEXON Lv2 Gothic Bold.ttf") format("opentype"); /* 폰트파일 불러오기 */
+    src: url("../font/nexon.ttf") format("opentype"); /* 폰트파일 불러오기 */
 }
 body {
     font-family: "NEXON";
