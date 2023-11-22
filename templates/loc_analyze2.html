@@ -1,108 +1,1744 @@
 {% extends "bootstrap/base.html" %}
 <!DOCTYPE html>
 <html lang="en">
-    {% block head %} {{ super() }}
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="generator" content="Mobirise v5.9.6, mobirise.com" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, minimum-scale=1"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/pick.css') }}"
-        />
-        <link
-            rel="shortcut icon"
-            href="{{ url_for('static',filename='images/changuploading.png') }}"
-            type="image/x-icon"
-        />
-        <title>{{ title }}</title>
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/animatecss/animate.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/theme/css/style.css')}}"
-        />
-        <link
-            rel="preload"
-            as="style"
-            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
-            type="text/css"
-        />
-    </head>
-    {% endblock %} {% block body %} {{ super() }}
-    <body>
-        <div class="container">
-            <a
-                type="button"
-                class="btn btn-danger"
-                href="/loc-analyze-1"
-                style="font-size: 2em"
-            >
-                뒤로가기
-            </a>
-            <h1 class="text-center mb-5 mt-5 title">{{title}}</h1>
-            <div id="textResult" class="mb-5">
-                <div class="col-12 form-group mb-3" data-for="m_business_type">
-                    <select
-                        name="loc"
-                        data-form-field="m_business_type"
-                        class="form-control display-2 mb-5"
-                        id="loc"
-                        required
-                    >
-                        {% set unique_values = [] %} {% for i in result %} {%
-                        for k,v in i.items()%} {% if k.split()[0] not in
-                        unique_values %} {% set _ =
-                        unique_values.append(k.split()[0]) %}
-                        <option value="{{ k.split()[0] }}">
-                            {{ k.split()[0] }}
-                        </option>
-                        {% endif %} {% endfor %}{% endfor %}
-                    </select>
-                    <div class="mb-5" id="content"></div>
+{% block head %} {{ super() }}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="generator" content="Mobirise v5.9.6, mobirise.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pick.css') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/changuploading.png') }}" type="image/x-icon" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/animatecss/animate.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/theme/css/style.css')}}" />
+    <link rel="preload" as="style" href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+        type="text/css" />
+</head>
+{% endblock %} {% block body %} {{ super() }}
+
+<body>
+    <div class="container">
+        <a type="button" class="btn btn-danger" href="/loc-analyze-1" style="font-size: 2em">
+            뒤로가기
+        </a>
+        <h1 class="text-center mb-5 mt-5 title">{{title}}</h1>
+        <div id="textResult" class="mb-5">
+            <div class="col-12 form-group mb-3" data-for="m_business_type">
+                <select name="loc" data-form-field="m_business_type" class="form-control display-2 mb-5" id="loc"
+                    required>
+                    {% set unique_values = [] %} {% for i in result %} {%
+                    for k,v in i.items()%} {% if k.split()[0] not in
+                    unique_values %} {% set _ =
+                    unique_values.append(k.split()[0]) %}
+                    <option value="{{ k.split()[0] }}">
+                        {{ k.split()[0] }}
+                    </option>
+                    {% endif %} {% endfor %}{% endfor %}
+                </select>
+                <img class="hidden" src="{{url_for('static',filename='images/map.png')}}" id="img">
+                <canvas id="myCanvas" width="364" height="595" style="border: 1px solid #d3d3d3">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+
+                <div class="mb-3" id="content"></div>
             </div>
         </div>
         <script>
-            let loc = document.getElementById("loc");
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
 
-            loc.addEventListener("change", () => {
-                let text = loc.value;
-                if (text === "서울특별시") {
-                    document.getElementById("content").innerHTML = `
+            window.onload = () => {
+                let img = document.getElementById('img');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                let array = [];
+                let radius = 0.03;
+
+                array.push({
+                    x: 0.71,
+                    y: 0.01,
+                    color: "transparent",
+                });
+
+                array.push({
+                    x: 0.41,
+                    y: 0.05,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.05,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.05,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.05,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.05,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.05,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.09,
+                    color: "transparent",
+                });
+                // array.push({x: 0.84, y: 0.09, color: "transparent"});
+                // array.push({x: 0.90, y: 0.09, color: "transparent"});
+                // array.push({x: 0.96, y: 0.09, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.13, color: "transparent"});
+                // array.push({x: 0.11, y: 0.13, color: "transparent"});
+                // array.push({x: 0.17, y: 0.13, color: "transparent"});
+                // array.push({x: 0.23, y: 0.13, color: "transparent"});
+                array.push({
+                    x: 0.29,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.13,
+                    color: "transparent",
+                });
+                // array.push({x: 0.84, y: 0.13, color: "transparent"});
+                // array.push({x: 0.90, y: 0.13, color: "transparent"});
+                // array.push({x: 0.96, y: 0.13, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.17, color: "transparent"});
+                // array.push({x: 0.11, y: 0.17, color: "transparent"});
+                // array.push({x: 0.17, y: 0.17, color: "transparent"});
+                // array.push({x: 0.23, y: 0.17, color: "transparent"});
+                array.push({
+                    x: 0.29,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.17,
+                    color: "transparent",
+                });
+                // array.push({x: 0.90, y: 0.17, color: "transparent"});
+                // array.push({x: 0.96, y: 0.17, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.21, color: "transparent"});
+                // array.push({x: 0.11, y: 0.21, color: "transparent"});
+                // array.push({x: 0.17, y: 0.21, color: "transparent"});
+                // array.push({x: 0.23, y: 0.21, color: "transparent"});
+                array.push({
+                    x: 0.29,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.21,
+                    color: "transparent",
+                });
+                // array.push({x: 0.90, y: 0.21, color: "transparent"});
+                // array.push({x: 0.96, y: 0.21, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.25, color: "transparent"});
+                // array.push({x: 0.11, y: 0.25, color: "transparent"});
+                // array.push({x: 0.17, y: 0.25, color: "transparent"});
+                // array.push({x: 0.23, y: 0.25, color: "transparent"});
+                array.push({
+                    x: 0.29,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.25,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.25, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.29, color: "transparent"});
+                // array.push({x: 0.11, y: 0.29, color: "transparent"});
+                array.push({
+                    x: 0.17,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.29,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.29, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.33, color: "transparent"});
+                // array.push({x: 0.11, y: 0.33, color: "transparent"});
+                array.push({
+                    x: 0.17,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.33,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.33, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.37, color: "transparent"});
+                // array.push({x: 0.11, y: 0.37, color: "transparent"});
+                array.push({
+                    x: 0.17,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.37,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.37, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.41, color: "transparent"});
+                // array.push({x: 0.11, y: 0.41, color: "transparent"});
+                // array.push({x: 0.17, y: 0.41, color: "transparent"});
+                array.push({
+                    x: 0.23,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.41,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.41, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.45, color: "transparent"});
+                // array.push({x: 0.11, y: 0.45, color: "transparent"});
+                // array.push({x: 0.17, y: 0.45, color: "transparent"});
+                array.push({
+                    x: 0.23,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.45,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.45, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.49, color: "transparent"});
+                // array.push({x: 0.11, y: 0.49, color: "transparent"});
+                // array.push({x: 0.17, y: 0.49, color: "transparent"});
+                array.push({
+                    x: 0.23,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.49,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.49, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.53, color: "transparent"});
+                // array.push({x: 0.11, y: 0.53, color: "transparent"});
+                // array.push({x: 0.17, y: 0.53, color: "transparent"});
+                array.push({
+                    x: 0.23,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.53,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.53, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.57, color: "transparent"});
+                // array.push({x: 0.11, y: 0.57, color: "transparent"});
+                array.push({
+                    x: 0.17,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.57,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.57, color: "transparent"});
+
+                // array.push({x: 0.05, y: 0.61, color: "transparent"});
+                // array.push({x: 0.11, y: 0.61, color: "transparent"});
+                array.push({
+                    x: 0.17,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.9,
+                    y: 0.61,
+                    color: "transparent",
+                });
+                // array.push({x: 0.96, y: 0.61, color: "transparent"});
+
+                array.push({
+                    x: 0.05,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.11,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.17,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.78,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.84,
+                    y: 0.65,
+                    color: "transparent",
+                });
+                // array.push({x: 0.90, y: 0.65, color: "transparent"});
+                // array.push({x: 0.96, y: 0.65, color: "transparent"});
+
+                array.push({
+                    x: 0.05,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.11,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.17,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.59,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.65,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.69,
+                    color: "transparent",
+                });
+                // array.push({x: 0.78, y: 0.69, color: "transparent"});
+                // array.push({x: 0.84, y: 0.69, color: "transparent"});
+                // array.push({x: 0.90, y: 0.69, color: "transparent"});
+                // array.push({x: 0.96, y: 0.69, color: "transparent"});
+
+                array.push({
+                    x: 0.05,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.11,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.17,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.35,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.41,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.47,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.53,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                // array.push({x: 0.59, y: 0.73, color: "transparent"});
+                array.push({
+                    x: 0.65,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.71,
+                    y: 0.73,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.11,
+                    y: 0.77,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.17,
+                    y: 0.77,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.77,
+                    color: "transparent",
+                });
+
+                array.push({
+                    x: 0.17,
+                    y: 0.81,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.81,
+                    color: "transparent",
+                });
+
+                array.push({
+                    x: 0.17,
+                    y: 0.93,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.93,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.93,
+                    color: "transparent",
+                });
+
+                array.push({
+                    x: 0.17,
+                    y: 0.97,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.23,
+                    y: 0.97,
+                    color: "transparent",
+                });
+                array.push({
+                    x: 0.29,
+                    y: 0.97,
+                    color: "transparent",
+                });
+
+                for (let i = 0; i < array.length; i++) {
+                    // 동그라미를 그립니다.
+                    ctx.beginPath();
+                    ctx.arc(
+                        array[i].x * canvas.width,
+                        array[i].y * canvas.height,
+                        radius * canvas.width,
+                        0,
+                        2 * Math.PI
+                    ); // 원의 반지름을 캔버스 너비의 3%로 설정합니다.
+                    ctx.fillStyle = array[i].color;
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                canvas.addEventListener(
+                    "mousedown",
+                    (event) => {
+                        //이벤트 감지
+                        let x1 = event.clientX - canvas.offsetLeft;
+                        let y1 = event.clientY - canvas.offsetTop;
+                        var inn = isInsideArc(x1, y1);
+                        if (inn.result) {
+                            array[inn.index].color =
+                                array[inn.index].color ===
+                                    "transparent"
+                                    ? "#ff0000"
+                                    : "transparent"; // 원의 색을 바꿉니다.
+                            reDraw(); // 원을 다시 그립니다.
+                            indexText.innerHTML =
+                                "Index: " +
+                                inn.index +
+                                ", Coordinates: (" +
+                                array[inn.index].x.toFixed(2) +
+                                ", " +
+                                array[inn.index].y.toFixed(2) +
+                                ")"; // 원의 인덱스와 좌표를 웹 페이지에 출력합니다.
+                        }
+                    }
+                );
+
+                let 강원도 = [];
+                강원도.push(array[0]);
+                강원도.push(array[1]);
+                강원도.push(array[2]);
+                강원도.push(array[3]);
+                강원도.push(array[4]);
+                강원도.push(array[5]);
+                강원도.push(array[6]);
+                강원도.push(array[9]);
+                강원도.push(array[10]);
+                강원도.push(array[11]);
+                강원도.push(array[12]);
+                강원도.push(array[13]);
+                강원도.push(array[14]);
+                강원도.push(array[19]);
+                강원도.push(array[20]);
+                강원도.push(array[21]);
+                강원도.push(array[22]);
+                강원도.push(array[23]);
+                강원도.push(array[28]);
+                강원도.push(array[29]);
+                강원도.push(array[30]);
+                강원도.push(array[31]);
+                강원도.push(array[32]);
+                강원도.push(array[33]);
+                강원도.push(array[39]);
+                강원도.push(array[40]);
+                강원도.push(array[41]);
+                강원도.push(array[42]);
+                강원도.push(array[43]);
+                강원도.push(array[49]);
+                강원도.push(array[50]);
+                강원도.push(array[51]);
+                강원도.push(array[52]);
+                강원도.push(array[53]);
+                강원도.push(array[54]);
+                강원도.push(array[65]);
+                강원도.push(array[66]);
+                강원도.push(array[67]);
+
+                let 인천 = [];
+                인천.push(array[24]);
+                인천.push(array[34]);
+
+                let 서울 = [];
+                서울.push(array[25]);
+                서울.push(array[26]);
+                서울.push(array[35]);
+                서울.push(array[36]);
+
+                let 경기도 = [];
+                경기도.push(array[7]);
+                경기도.push(array[8]);
+                경기도.push(array[15]);
+                경기도.push(array[16]);
+                경기도.push(array[17]);
+                경기도.push(array[18]);
+                경기도.push(array[27]);
+                경기도.push(array[37]);
+                경기도.push(array[38]);
+                경기도.push(array[44]);
+                경기도.push(array[45]);
+                경기도.push(array[46]);
+                경기도.push(array[47]);
+                경기도.push(array[48]);
+                경기도.push(array[58]);
+                경기도.push(array[59]);
+
+                let 세종 = [];
+                세종.push(array[72]);
+                세종.push(array[85]);
+
+                let 대전 = [];
+                대전.push(array[97]);
+                대전.push(array[98]);
+                대전.push(array[109]);
+                대전.push(array[110]);
+
+                let 충청남도 = [];
+                충청남도.push(array[55]);
+                충청남도.push(array[56]);
+                충청남도.push(array[57]);
+                충청남도.push(array[68]);
+                충청남도.push(array[69]);
+                충청남도.push(array[70]);
+                충청남도.push(array[71]);
+                충청남도.push(array[81]);
+                충청남도.push(array[82]);
+                충청남도.push(array[83]);
+                충청남도.push(array[84]);
+                충청남도.push(array[94]);
+                충청남도.push(array[95]);
+                충청남도.push(array[96]);
+                충청남도.push(array[106]);
+                충청남도.push(array[107]);
+                충청남도.push(array[108]);
+
+                let 충청북도 = [];
+                충청북도.push(array[60]);
+                충청북도.push(array[61]);
+                충청북도.push(array[62]);
+                충청북도.push(array[63]);
+                충청북도.push(array[64]);
+                충청북도.push(array[73]);
+                충청북도.push(array[74]);
+                충청북도.push(array[75]);
+                충청북도.push(array[76]);
+                충청북도.push(array[86]);
+                충청북도.push(array[87]);
+                충청북도.push(array[99]);
+                충청북도.push(array[111]);
+
+                let 경상북도 = [];
+                경상북도.push(array[77]);
+                경상북도.push(array[78]);
+                경상북도.push(array[79]);
+                경상북도.push(array[80]);
+                경상북도.push(array[88]);
+                경상북도.push(array[89]);
+                경상북도.push(array[90]);
+                경상북도.push(array[91]);
+                경상북도.push(array[92]);
+                경상북도.push(array[93]);
+                경상북도.push(array[100]);
+                경상북도.push(array[101]);
+                경상북도.push(array[102]);
+                경상북도.push(array[103]);
+                경상북도.push(array[104]);
+                경상북도.push(array[105]);
+                경상북도.push(array[112]);
+                경상북도.push(array[113]);
+                경상북도.push(array[114]);
+                경상북도.push(array[115]);
+                경상북도.push(array[116]);
+                경상북도.push(array[117]);
+                경상북도.push(array[124]);
+                경상북도.push(array[125]);
+                경상북도.push(array[127]);
+                경상북도.push(array[128]);
+                경상북도.push(array[129]);
+                경상북도.push(array[137]);
+                경상북도.push(array[140]);
+                경상북도.push(array[141]);
+
+                let 대구 = [];
+                대구.push(array[126]);
+                대구.push(array[138]);
+                대구.push(array[139]);
+
+                let 울산 = [];
+                울산.push(array[153]);
+                울산.push(array[154]);
+                울산.push(array[166]);
+                울산.push(array[167]);
+
+                let 부산 = [];
+                부산.push(array[181]);
+                부산.push(array[182]);
+
+                let 광주 = [];
+                광주.push(array[156]);
+                광주.push(array[157]);
+                광주.push(array[171]);
+                광주.push(array[172]);
+
+                let 전라북도 = [];
+                전라북도.push(array[118]);
+                전라북도.push(array[119]);
+                전라북도.push(array[120]);
+                전라북도.push(array[121]);
+                전라북도.push(array[122]);
+                전라북도.push(array[123]);
+                전라북도.push(array[130]);
+                전라북도.push(array[131]);
+                전라북도.push(array[132]);
+                전라북도.push(array[133]);
+                전라북도.push(array[134]);
+                전라북도.push(array[142]);
+                전라북도.push(array[143]);
+                전라북도.push(array[144]);
+                전라북도.push(array[145]);
+                전라북도.push(array[146]);
+
+                let 전라남도 = [];
+                전라남도.push(array[155]);
+                전라남도.push(array[158]);
+                전라남도.push(array[159]);
+                전라남도.push(array[168]);
+                전라남도.push(array[169]);
+                전라남도.push(array[170]);
+                전라남도.push(array[173]);
+                전라남도.push(array[174]);
+                전라남도.push(array[175]);
+                전라남도.push(array[182]);
+                전라남도.push(array[183]);
+                전라남도.push(array[184]);
+                전라남도.push(array[185]);
+                전라남도.push(array[186]);
+                전라남도.push(array[187]);
+                전라남도.push(array[188]);
+                전라남도.push(array[189]);
+                전라남도.push(array[194]);
+                전라남도.push(array[195]);
+                전라남도.push(array[196]);
+                전라남도.push(array[197]);
+                전라남도.push(array[198]);
+                전라남도.push(array[199]);
+                전라남도.push(array[200]);
+                전라남도.push(array[201]);
+                전라남도.push(array[205]);
+                전라남도.push(array[206]);
+                전라남도.push(array[207]);
+                전라남도.push(array[208]);
+                전라남도.push(array[209]);
+
+                let 경상남도 = [];
+                경상남도.push(array[135]);
+                경상남도.push(array[136]);
+                경상남도.push(array[147]);
+                경상남도.push(array[148]);
+                경상남도.push(array[149]);
+                경상남도.push(array[150]);
+                경상남도.push(array[151]);
+                경상남도.push(array[152]);
+                경상남도.push(array[160]);
+                경상남도.push(array[161]);
+                경상남도.push(array[162]);
+                경상남도.push(array[163]);
+                경상남도.push(array[164]);
+                경상남도.push(array[165]);
+                경상남도.push(array[176]);
+                경상남도.push(array[177]);
+                경상남도.push(array[178]);
+                경상남도.push(array[179]);
+                경상남도.push(array[190]);
+                경상남도.push(array[191]);
+                경상남도.push(array[192]);
+                경상남도.push(array[193]);
+                경상남도.push(array[202]);
+                경상남도.push(array[203]);
+                경상남도.push(array[204]);
+
+                let 제주도 = [];
+                제주도.push(array[210]);
+                제주도.push(array[211]);
+                제주도.push(array[212]);
+                제주도.push(array[213]);
+                제주도.push(array[214]);
+                제주도.push(array[215]);
+
+                const total = [
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#c1e9ad",
+                        color: "#FFFFFF",
+                        array: 강원도,
+                        type: "A",
+                        textindex: 355,
+                        text: "강원도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#800000",
+                        color: "#FFFFFF",
+                        array: 인천,
+                        type: "B",
+                        textindex: 356,
+                        text: "인천",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#FFFF00",
+                        color: "#FFFFFF",
+                        array: 서울,
+                        type: "C",
+                        textindex: 357,
+                        text: "서울",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#808000",
+                        color: "#FFFFFF",
+                        array: 경기도,
+                        type: "D",
+                        textindex: 358,
+                        text: "경기도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#00FF00",
+                        color: "#FFFFFF",
+                        array: 세종,
+                        type: "E",
+                        textindex: 359,
+                        text: "세종",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#008000",
+                        color: "#FFFFFF",
+                        array: 대전,
+                        type: "F",
+                        textindex: 360,
+                        text: "대전",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#00FFFF",
+                        color: "#FFFFFF",
+                        array: 충청남도,
+                        type: "G",
+                        textindex: 361,
+                        text: "충청남도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#008080",
+                        color: "#FFFFFF",
+                        array: 충청북도,
+                        type: "H",
+                        textindex: 362,
+                        text: "충청북도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#0000FF",
+                        color: "#FFFFFF",
+                        array: 경상북도,
+                        type: "I",
+                        textindex: 363,
+                        text: "경상북도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#000080",
+                        color: "#FFFFFF",
+                        array: 대구,
+                        type: "J",
+                        textindex: 364,
+                        text: "대구",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#FF00FF",
+                        color: "#FFFFFF",
+                        array: 울산,
+                        type: "K",
+                        textindex: 365,
+                        text: "울산",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#800080",
+                        color: "#FFFFFF",
+                        array: 부산,
+                        type: "L",
+                        textindex: 366,
+                        text: "부산",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#808080",
+                        color: "#FFFFFF",
+                        array: 광주,
+                        type: "M",
+                        textindex: 367,
+                        text: "광주",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#C0C0C0",
+                        color: "#FFFFFF",
+                        array: 전라북도,
+                        type: "N",
+                        textindex: 368,
+                        text: "전라북도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#FFC0CB",
+                        color: "#FFFFFF",
+                        array: 전라남도,
+                        type: "O",
+                        textindex: 369,
+                        text: "전라남도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#FA8072",
+                        color: "#FFFFFF",
+                        array: 경상남도,
+                        type: "P",
+                        textindex: 370,
+                        text: "경상남도",
+                    },
+                    {
+                        originalColor: "#FFFFFF",
+                        clickedColor: "#F08080",
+                        color: "#FFFFFF",
+                        array: 제주도,
+                        type: "Q",
+                        textindex: 371,
+                        text: "제주도",
+                    },
+                ];
+                function isInsideArc(x1, y1) {
+                    let result = false;
+                    let index = -1;
+                    let region = null;
+                    let circle_len = radius * canvas.width;
+                    for (let i = 0; i < total.length; i++) {
+                        total[i].array.forEach((item, idx) => {
+                            let x = item.x * canvas.width - x1;
+                            let y = item.y * canvas.height - y1;
+                            let my_len = Math.sqrt(
+                                Math.abs(x * x) + Math.abs(y * y)
+                            );
+                            if (circle_len >= my_len) {
+                                result = true;
+                                index = idx;
+                                region = total[i];
+                            }
+                        });
+                    }
+                    return { result: result, region: region };
+                }
+
+                let selectedRegion = null; // 선택된 원을 추적하는 변수
+
+                canvas.addEventListener("click", function (event) {
+                    let x1 = event.clientX - canvas.offsetLeft;
+                    let y1 = event.clientY - canvas.offsetTop;
+                    var inn = isInsideArc(x1, y1);
+
+                    if (inn.result) {
+                        if (
+                            selectedRegion === null ||
+                            selectedRegion === inn.region
+                        ) {
+                            selectedRegion = inn.region;
+
+                            // 모든 지역의 색상을 원래대로 복원
+                            for (let i = 0; i < total.length; i++) {
+                                total[i].color =
+                                    total[i].originalColor;
+                            }
+
+                            // 선택된 지역의 색상을 변경
+                            selectedRegion.color =
+                                selectedRegion.clickedColor;
+                        }
+                    } else if (selectedRegion) {
+                        // 선택된 지역의 색상을 원래대로 복원
+                        selectedRegion.color =
+                            selectedRegion.originalColor;
+                        selectedRegion = null;
+                    }
+
+                    reDraw();
+
+                    let loc = selectedRegion.text;
+
+                    let text = loc;
+                    if (text === "서울특별시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "서울특별시" in k %}
@@ -145,9 +1781,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "인천광역시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "인천광역시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "인천광역시" in k %}
@@ -190,9 +1826,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "경기도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "경기도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "경기도" in k %}
@@ -235,9 +1871,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "강원도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "강원도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "강원도" in k %}
@@ -280,9 +1916,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "충청남도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "충청남도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "충청남도" in k %}
@@ -325,9 +1961,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "충청북도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "충청북도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "충청북도" in k %}
@@ -370,9 +2006,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "세종특별자치시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "세종특별자치시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "세종특별자치시" in k %}
@@ -415,9 +2051,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "대전광역시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "대전광역시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "대전광역시" in k %}
@@ -460,9 +2096,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "경상북도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "경상북도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "경상북도" in k %}
@@ -505,9 +2141,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "경상남도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "경상남도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "경상남도" in k %}
@@ -550,9 +2186,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "대구광역시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "대구광역시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "대구광역시" in k %}
@@ -595,9 +2231,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "울산광역시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "울산광역시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "울산광역시" in k %}
@@ -640,9 +2276,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "부산광역시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "부산광역시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "부산광역시" in k %}
@@ -685,9 +2321,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "전라북도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "전라북도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "전라북도" in k %}
@@ -730,9 +2366,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-                else if (text === "전라남도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "전라남도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "전라남도" in k %}
@@ -775,9 +2411,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-            else if (text === "광주광역시") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "광주광역시") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "광주광역시" in k %}
@@ -820,9 +2456,9 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
-                }
-        else if (text === "제주특별자치도") {
-                    document.getElementById("content").innerHTML = `
+                    }
+                    else if (text === "제주특별자치도") {
+                        document.getElementById("content").innerHTML = `
                 {% for i in result%}
                 {% for k,v in i.items()%}
                     {% if "제주특별자치도" in k %}
@@ -865,14 +2501,55 @@
                     {% endif %}
                 {% endfor %}{% endfor %}
                     `;
+                    }
+                });
+
+                const reDraw = () => {
+                    ctx.clearRect(
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+                    ctx.drawImage(
+                        img,
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+                    for (let i = 0; i < total.length; i++) {
+                        for (
+                            let j = 0;
+                            j < total[i].array.length;
+                            j++
+                        ) {
+                            ctx.beginPath();
+                            ctx.arc(
+                                total[i].array[j].x * canvas.width,
+                                total[i].array[j].y * canvas.height,
+                                radius * canvas.width,
+                                0,
+                                2 * Math.PI
+                            );
+                            ctx.fillStyle = total[i].color;
+                            ctx.fill();
+                            ctx.stroke();
+                        }
+                    }
                 }
-            });
+                reDraw();
+            };
+
+
+
         </script>
         <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/smoothscroll/smooth-scroll.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/mbr-switch-arrow/mbr-switch-arrow.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/theme/js/script.js')}}"></script>
-    </body>
-    {% endblock %}
+</body>
+{% endblock %}
+
 </html>
