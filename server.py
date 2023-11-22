@@ -143,7 +143,7 @@ def loc_analyze2():
     m2 = int(request.args.get('major2', default=None))
     ma = Analysis(major=(int(m1), int(m2)))
     r = ma.l_analysis()
-    ma.drawBar()
+    # ma.drawBar()
     r = ma.l_analysis()
     return render_template("loc_analyze2.html", title=f"{bindustry[m1]}-{industry[m2]} 업종 상권분석", result=r)
 

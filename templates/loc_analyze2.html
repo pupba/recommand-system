@@ -65,9 +65,6 @@
     </head>
     {% endblock %} {% block body %} {{ super() }}
     <body>
-        <button class="btn btn-secondary" type="button" onclick="">
-            뒤로 가기
-        </button>
         <div class="container">
             <a
                 type="button"
@@ -79,49 +76,798 @@
             </a>
             <h1 class="text-center mb-5 mt-5 title">{{title}}</h1>
             <div id="textResult" class="mb-5">
-                <!--1. 지역 result-->
-                {% for i in result %}
-                <!--2. 사전 k:title,v:값-->
-                {% for k,v in i.items()%}
-                <caption class="text-center display-4">
-                    <!--지역-->
-                    <h3>{{ k }}</h3>
-                </caption>
-                <div id="imageResult">
-                    <img
-                        src="{{ url_for('static', filename='results/loc/' +
-                    k.split()[0] + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
-                        alt="이미지 결과"
-                    />
-                </div>
-                <table class="table mb-4 text-center display-6">
-                    <thead class="table-active">
-                        <tr>
-                            <th>지역</th>
-                            {% if "금액" in k %}
-                            <th>금액</th>
-                            {% else %}
-                            <th>건수</th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--3. 튜플-->
-                        {% for value in v %}
-                        <tr>
-                            <td>{{value[0]}}</td>
-                            {% if "금액" in k%}
-                            <td>{{value[1]}}만 원</td>
-                            {% else %}
-                            <td>{{value[1]}}건</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% endfor %} {% endfor %}
+                <div class="col-12 form-group mb-3" data-for="m_business_type">
+                    <select
+                        name="loc"
+                        data-form-field="m_business_type"
+                        class="form-control display-2 mb-5"
+                        id="loc"
+                        required
+                    >
+                        {% set unique_values = [] %} {% for i in result %} {%
+                        for k,v in i.items()%} {% if k.split()[0] not in
+                        unique_values %} {% set _ =
+                        unique_values.append(k.split()[0]) %}
+                        <option value="{{ k.split()[0] }}">
+                            {{ k.split()[0] }}
+                        </option>
+                        {% endif %} {% endfor %}{% endfor %}
+                    </select>
+                    <div class="mb-5" id="content"></div>
             </div>
         </div>
+        <script>
+            let loc = document.getElementById("loc");
+
+            loc.addEventListener("change", () => {
+                let text = loc.value;
+                if (text === "서울특별시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "서울특별시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '서울특별시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "인천광역시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "인천광역시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '인천광역시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "경기도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "경기도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '경기도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "강원도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "강원도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '강원도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "충청남도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "충청남도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '충청남도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "충청북도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "충청북도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '충청북도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "세종특별자치시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "세종특별자치시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '세종특별자치시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "대전광역시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "대전광역시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '대전광역시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "경상북도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "경상북도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '경상북도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "경상남도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "경상남도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '경상남도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "대구광역시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "대구광역시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '대구광역시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "울산광역시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "울산광역시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '울산광역시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "부산광역시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "부산광역시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '부산광역시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "전라북도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "전라북도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '전라북도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+                else if (text === "전라남도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "전라남도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '전라남도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            else if (text === "광주광역시") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "광주광역시" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '광주광역시' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+        else if (text === "제주특별자치도") {
+                    document.getElementById("content").innerHTML = `
+                {% for i in result%}
+                {% for k,v in i.items()%}
+                    {% if "제주특별자치도" in k %}
+                    <caption class="text-center display-4">
+                        <!--지역-->
+                        <h3>{{ k }}</h3>
+                    </caption>
+                    <div id="imageResult">
+                        <img
+                            src="{{ url_for('static', filename='results/loc/' +
+                        '제주특별자치도' + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
+                            alt="이미지 결과"
+                        />
+                    </div>
+                    <table class="table mb-4 text-center display-6">
+                        <thead class="table-active">
+                            <tr>
+                                <th>지역</th>
+                                {% if "금액" in k %}
+                                <th>금액</th>
+                                {% else %}
+                                <th>건수</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--3. 튜플-->
+                            {% for value in v %}
+                            <tr>
+                                <td>{{value[0]}}</td>
+                                {% if "금액" in k%}
+                                <td>{{value[1]}}만 원</td>
+                                {% else %}
+                                <td>{{value[1]}}건</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                {% endfor %}{% endfor %}
+                    `;
+                }
+            });
+        </script>
         <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/smoothscroll/smooth-scroll.js')}}"></script>
         <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
