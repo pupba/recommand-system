@@ -79,23 +79,35 @@
     </head>
     {% endblock %} {% block body %} {{ super() }}
     <body>
+        {% if match == True %}
+            <div id="alertMessage" class="alert alert-light text-primary display-5" role="alert">로그인 성공!</div>
+        {% endif %}
+
+        <script>
+            // 2초 후에 알림 메시지를 숨기는 함수
+            const hideAlertMessage = () => {
+            var alertMessage = document.getElementById("alertMessage");
+                if (alertMessage) {
+                    alertMessage.style.display = "none";
+                }
+            }
+            // 2초 타이머 설정
+            setTimeout(hideAlertMessage, 2000);
+        </script>
         <section
             data-bs-version="5.1"
             class="list1 cid-tJGRlgYbKj"
             id="list01-8"
         >
             <div class="container">
-                {% if match == True %}
-                <div class="alert alert-primary" role="alert">로그인 성공!</div>
-                {% endif %}
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-12 col-lg-10 m-auto">
+                    <div class="col-12 col-md-12 col-lg-10 m-auto mt-0">
                         <div class="content">
                             <div class="mbr-section-head align-left mb-5">
                                 <a
                                     type="button"
-                                    class="btn btn-danger"
-                                    href="/"
+                                    class="btn btn-primary display-7 mb-5"
+                                    href="/logout"
                                     style="font-size: 2em"
                                 >
                                     로그아웃

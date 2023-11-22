@@ -59,13 +59,13 @@
         <section data-bs-version="5.1" class="form5 cid-tVSFAKders" id="form02-4" style="min-height: 100vh;">
             <div class="container">
                 <a
-                                    type="button"
-                                    class="btn btn-danger"
-                                    href="/pick"
-                                    style="font-size: 2em"
-                                >
-                                    로그아웃
-                                </a>
+                    type="button"
+                    class="btn btn-danger"
+                    href="/b-recommand-1"
+                    style="font-size: 2em"
+                >
+                    뒤로가기
+                </a>
                 <div class="row justify-content-center">
                     <div class="col-12 content-head">
                         <div class="mbr-section-head mb-5">
@@ -78,6 +78,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid"></div>
+                <caption>
+                <h3 class="text-center text-primary display-5">
+                    사용자: {{data['기본정보'][0]}} 정보
+                </h3>
+                </caption>
+                    <table class="table table-bordered text-center display-7 mb-5">
+                        <tbody>
+                        <tr>
+                            <th class="table-light text-primary">자본금</th>
+                            <td colspan="2">{{data['기본정보'][1]}}만 원</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-primary">선호 업종</th>
+                            <td>{{data['기본정보'][2]}}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-primary">선호 지역</th>
+                            <td>{{data['기본정보'][3]}}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-primary">최다검색 업종</th>
+                            <td>{{data['추가정보'][1]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
                 <div class="row justify-content-center mt-4">
                     <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
                         <table class="table table-bordered text-center display-7" style="table-layout: auto;">

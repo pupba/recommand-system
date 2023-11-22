@@ -1,4 +1,3 @@
-# from modules.secret import dbconn
 # from secret import dbconn
 from modules.secret import dbconn
 from modules.pick import Pick
@@ -8,6 +7,8 @@ from tensorflow.keras.layers import Dense
 import numpy as np
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.models import load_model
+import os
 
 
 class Recommand:
@@ -23,11 +24,13 @@ class Recommand:
         self.target = None
         self.input_pred = None
         self.result = None
+        self.TYPE = None
 
     def setting(self, TYPE: str = "업종") -> None:
         lb = LabelEncoder()
         mm = MinMaxScaler()
-        if TYPE == "상권":
+        self.TYPE = TYPE
+        if self.TYPE == "상권":
             sql = "SELECT * FROM loc_anal"
             usr = pd.read_sql(sql, self.conn).iloc[:, [1, 2, 3, 4]]
 
@@ -81,26 +84,30 @@ class Recommand:
             self.input_pred = mm.transform(self.input_pred)
 
     def modeling(self):
-        if None in self.input_pred:
-            return "sorry"
-        # 모델 구성
-        model = Sequential()
-        model.add(Dense(128, activation='relu', input_shape=(4,)))
-        model.add(Dense(64, activation='relu'))
-        model.add(Dense(64, activation='relu'))
-        model.add(Dense(32, activation='relu'))
-        model.add(Dense(len(self.target), activation='softmax'))
-
-        # 컴파일
-        model.compile(optimizer='adam',
-                      loss='categorical_crossentropy', metrics=['accuracy'])
+        fns = os.listdir('./static/models')
         lb = LabelEncoder()
         y = lb.fit_transform(self.target)
         y_encoded = to_categorical(y, num_classes=len(self.target))
         self.train = self.train.astype(float)
-        # 학습
-        model.fit(self.train, y_encoded, epochs=10, batch_size=32)
+        if f'{self.TYPE}.h5' in fns:
+            model = load_model(f'./static/models/{self.TYPE}.h5')
+        else:
+            if None in self.input_pred:
+                return "sorry"
+            # 모델 구성
+            model = Sequential()
+            model.add(Dense(128, activation='relu', input_shape=(4,)))
+            model.add(Dense(64, activation='relu'))
+            model.add(Dense(64, activation='relu'))
+            model.add(Dense(32, activation='relu'))
+            model.add(Dense(len(self.target), activation='softmax'))
 
+            # 컴파일
+            model.compile(optimizer='adam',
+                          loss='categorical_crossentropy', metrics=['accuracy'])
+            # 학습
+            model.fit(self.train, y_encoded, epochs=10, batch_size=32)
+            model.save(f'./static/models/{self.TYPE}.h5')
         # 예측
         self.input_pred = self.input_pred.astype(float)
         predict = model.predict(self.input_pred).argsort(axis=1)[:, -5:]

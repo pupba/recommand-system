@@ -14,7 +14,11 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='css/pick.css') }}"
         />
-
+        <link
+            rel="shortcut icon"
+            href="{{ url_for('static',filename='images/changuploading.png') }}"
+            type="image/x-icon"
+        />
         <title>{{ title }}</title>
         <link
             rel="stylesheet"
@@ -65,52 +69,57 @@
             뒤로 가기
         </button>
         <div class="container">
+            <a
+                type="button"
+                class="btn btn-danger"
+                href="/loc-analyze-1"
+                style="font-size: 2em"
+            >
+                뒤로가기
+            </a>
             <h1 class="text-center mb-5 mt-5 title">{{title}}</h1>
             <div id="textResult" class="mb-5">
-                {% for i in result %} {% for k,v in i.items()%}
-                <caption>
+                <!--1. 지역 result-->
+                {% for i in result %}
+                <!--2. 사전 k:title,v:값-->
+                {% for k,v in i.items()%}
+                <caption class="text-center display-4">
+                    <!--지역-->
                     <h3>{{ k }}</h3>
                 </caption>
-                <div id="imageResult" class="mb-5">
+                <div id="imageResult">
                     <img
                         src="{{ url_for('static', filename='results/loc/' +
-                    k.split()[0] + ('_대분류.png' if '대분류' in k else '_중분류.png')) }}"
+                    k.split()[0] + ('_대분류_' if '대분류' in k else '_중분류_')+('결제건수' if '결제건수' in k else '결제금액')+'.png') }}"
                         alt="이미지 결과"
-                        class="mb-5"
                     />
                 </div>
-                <table class="table">
-                    <tr>
-                        <th>지역</th>
-                        {% if "금액" in k%}
-                        <th>건수</th>
-                        {% else %}
-                        <th>금액</th>
-                        {% endif %}
-                    </tr>
-                    {% for value in v %}
-                    <p>{{value}}</p>
-                    <tr>
-                        <td>{{value[0]}}</td>
-                        {% if "금액" in k%}
-                        <td>{{value[1]}}만 원</td>
-                        {% else %}
-                        <td>{{value[1]}}건</td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
+                <table class="table mb-4 text-center display-6">
+                    <thead class="table-active">
+                        <tr>
+                            <th>지역</th>
+                            {% if "금액" in k %}
+                            <th>금액</th>
+                            {% else %}
+                            <th>건수</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--3. 튜플-->
+                        {% for value in v %}
+                        <tr>
+                            <td>{{value[0]}}</td>
+                            {% if "금액" in k%}
+                            <td>{{value[1]}}만 원</td>
+                            {% else %}
+                            <td>{{value[1]}}건</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
                 {% endfor %} {% endfor %}
-            </div>
-            <div id="imageResult" class="mb-5">
-                {% for i in filenames %}
-                <h3>{{i[:-4]}}</h3>
-                <img
-                    src="{{ url_for('static', filename='results/loc/' + i) }}"
-                    alt="이미지 결과"
-                    class="mb-5"
-                />
-                {% endfor %}
             </div>
         </div>
         <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

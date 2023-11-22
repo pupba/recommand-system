@@ -8,10 +8,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 # mac m1 gpu 에러해결을 위한 코드
 import matplotlib
-from flask import url_for
 matplotlib.use('agg')
 # 업종코드 매핑을 위해 import
 font_prop = FontProperties(fname='./static/font/nexon.ttf')
+font_prop.set_size(20)
 
 
 class Analysis:
@@ -93,7 +93,7 @@ class Analysis:
         b_Pay_Count_Top5 = self.b_PayCount_T5()
         b_Pay_Count_Top5.index = b_Pay_Count_Top5.index.map(
             lambda x: industry.get(x, "알 수 없음"))
-        self.__b_result["업종별 결제건수 TOP5 (간)"] = b_Pay_Count_Top5
+        self.__b_result["업종별 결제건수 TOP5 (건)"] = b_Pay_Count_Top5
 
         # 업종별 결제금액 분석
         PayMoney = self.b_PayMoney()
@@ -164,10 +164,10 @@ class Analysis:
                 str).str.startswith(str(doe)[:2])
             d = self.__hjd[mask].iloc[0, 1]
 
-            title = [f"{d} 내 {self.bmajor[self.major[0]-1]} 업종(대분류) 결제건수가 가장 많은 TOP 5 구역",
-                     f"{d} 내 {self.bmajor[self.major[0]-1]} 업종(대분류) 결제금액이 가장 많은 TOP 5 구역",
-                     f"{d} 내 {self.mmajorl[self.major[1]]} 업종(중분류) 결제건수가 가장 많은 TOP 5 구역",
-                     f"{d} 내 {self.mmajorl[self.major[1]]} 업종(중분류) 결제금액이 가장 많은 TOP 5 구역"]
+            title = [f"{d} 내 {self.bmajor[self.major[0]-1]} 업종 (대분류) 결제건수가 가장 많은 TOP 5 구역",
+                     f"{d} 내 {self.bmajor[self.major[0]-1]} 업종 (대분류) 결제금액이 가장 많은 TOP 5 구역",
+                     f"{d} 내 {self.mmajorl[self.major[1]]} 업종 (중분류) 결제건수가 가장 많은 TOP 5 구역",
+                     f"{d} 내 {self.mmajorl[self.major[1]]} 업종 (중분류) 결제금액이 가장 많은 TOP 5 구역"]
 
             values = [self.top5_payment_count_major(self.major[0], data.copy(deep=True)),
                       self.top5_payment_amount_major(
@@ -176,80 +176,62 @@ class Analysis:
                           self.major[1], data.copy(deep=True)),
                       self.top5_payment_amount_minor(self.major[1], data.copy(deep=True))]
             tmp = {i: k for i, k in zip(title, values)}
-
             self.__l_result.append(tmp)
         return tuple(self.__l_result)
 
     def drawBar(self, TYPE: str = None):
-        def drawPlot(**args):
-            idx = args['idx']
-            figs = args['figs']
-            plots = args['plots']
-            title = args['title']
-            x = args['x']
-            y = args['y']
-
-            plots[idx].set_title(title, fontproperties=font_prop)
-            plots[idx].set_xlabel("건수" if idx in [1, 3]
-                                  else "만 원", fontproperties=font_prop)
-            plots[idx].set_ylabel("업종(대분류)" if idx in [
-                                  0, 1] else "업종(중분류)", fontproperties=font_prop)
-            plots[idx].set_yticklabels(x, fontproperties=font_prop)
-            plots[idx].set_ylim(5, 10)
-            sns.barplot(x=y, y=x, hue=y, palette='Set3',
-                        legend=False, ax=plots[idx], orient='h')
-            if idx == 1:
-                figs[0].tight_layout()
-                figs[0].savefig(
-                    f"./static/results/loc/{title.split()[0]}_{'대분류'}.png")
-            if idx == 3:
-                figs[1].tight_layout()
-                figs[1].savefig(
-                    f"./static/results/loc/{title.split()[0]}_{'중분류'}.png")
-                plots[0].cla()
-                plots[1].cla()
-                plots[2].cla()
-                plots[3].cla()
+        def drawPlot(fig, plot, title, x, y, TYPE="loc"):
+            if TYPE == 'biz':
+                plot.set_title(title, fontproperties=font_prop)
+                plot.set_xlabel("건수" if title.endswith("대분류")
+                                else "만 원", fontproperties=font_prop)
+                plot.set_ylabel("업종", fontproperties=font_prop)
+                plot.set_yticks(range(len(x)))
+                plot.set_yticklabels(x, fontproperties=font_prop)
+                plot.set_ylim(5, 10)
+                sns.barplot(x=y, y=x, hue=y, palette='Set3',
+                            legend=False, ax=plot, orient='h')
+                fig.tight_layout()
+                fig.savefig(
+                    f"./static/results/biz/{'결제건수' if '건수' in title else '결제금액'}{'_TOP5' if 'TOP5' in title else ''}.png")
+                plot.cla()
+            else:
+                plot.set_title(title, fontproperties=font_prop)
+                plot.set_xlabel("건수" if title.endswith("대분류")
+                                else "만 원", fontproperties=font_prop)
+                plot.set_ylabel("업종(대분류)" if title.startswith(
+                    "업종") else "업종(중분류)", fontproperties=font_prop)
+                plot.set_yticks(range(len(x)))
+                plot.set_yticklabels(x, fontproperties=font_prop)
+                plot.set_ylim(5, 10)
+                sns.barplot(x=y, y=x, hue=y, palette='Set3',
+                            legend=False, ax=plot, orient='h')
+                fig.tight_layout()
+                fig.savefig(
+                    f"./static/results/loc/{title.split()[0]}_{'대분류' if '대분류' in title else '중분류'}_{'결제건수' if '건수' in title else '결제금액'}.png")
+                plot.cla()
 
         sns.set(style="whitegrid")
-        fig1, axs1 = plt.subplots(1, 2, figsize=(15, 8))
-        fig2, axs2 = plt.subplots(1, 2, figsize=(15, 8))
-        plots = (axs1[0], axs1[1], axs2[0], axs2[1])
-        if TYPE == "biz":
 
-            for idx, key in enumerate(list(self.__b_result.keys())[:-2]):
+        if TYPE == "biz":
+            titles = list(self.__b_result.keys())[:-2]
+            for key in titles:
+                fig, plot = plt.subplots(figsize=(15, 8))
                 x = self.__b_result[key].index
                 y = self.__b_result[key]
-
-                plots[idx].set_title(key, fontproperties=font_prop)
-                plots[idx].set_xlabel(
-                    "만 원" if idx in [2, 3] else "건수", fontproperties=font_prop)
-                plots[idx].set_ylabel("구역", fontproperties=font_prop)
-                plots[idx].set_ylim(5, 10)
-                plots[idx].set_yticklabels(x, fontproperties=font_prop)
-                sns.barplot(x=y, y=x, hue=y, palette='Set3',
-                            legend=False, ax=plots[idx], orient='h')
-
-                if idx == 1:
-                    fig1.tight_layout()
-                    fig1.savefig(
-                        f"./static/results/biz/{'결제건수'}.png"
-                    )
-                if idx == 3:
-                    fig2.tight_layout()
-                    fig2.savefig(
-                        f"./static/results/biz/{'결제금액'}.png"
-                    )
+                drawPlot(fig, plot, key, x, y, TYPE)
+                plt.close(fig)
         else:
             for doe in self.__l_result:
                 for idx, (title, data) in enumerate(doe.items()):
+                    fig, plot = plt.subplots(figsize=(15, 8))
                     x = []
                     y = []
                     for i in data:
                         x.append(i[0])
                         y.append(i[1])
-                    drawPlot(idx=idx, figs=(fig1, fig2),
-                             plots=plots, title=title, x=x, y=y)
+                    drawPlot(fig, plot, title, x, y)
+                    plt.close(fig)
 
     def getIncomeandAge(self) -> None:
         result = []
