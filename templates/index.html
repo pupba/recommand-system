@@ -3,79 +3,161 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1"
+        />
         <title>{{title}}</title>
         {% block head %} {{ super() }}
         <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+            rel="shortcut icon"
+            href="{{ url_for('static',filename='images/changuploading.png') }}"
+            type="image/x-icon"
         />
         <link
             rel="stylesheet"
-            href="{{ url_for('static', filename='css/index_css.css') }}"
+            href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/animatecss/animate.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/theme/css/style.css')}}"
+        />
+        <link
+            rel="preload"
+            href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
+            as="style"
+            onload="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript
+            ><link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
+        /></noscript>
+        <link
+            rel="preload"
+            as="style"
+            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+            type="text/css"
         />
         {% endblock %}
     </head>
-    {% block body %} {{ super() }} {% if match == True %}
-    <div class="alert alert-primary" role="alert">로그인 성공!</div>
-    {% elif match == None %} {% else %}
-    <div class="alert alert-danger" role="alert">
-        아이디 비밀번호를 확인해주세요!
-    </div>
-    {% endif %}
+    {% block body %} {{ super() }}
     <body class="img js-fullheight">
-        <!--여기에다가 작성-->
-        <section class="ftco-section">
+        <section
+            data-bs-version="5.1"
+            class="form5 cid-tVSCCV3HoU"
+            id="form02-2"
+            style="min-height: 100vh"
+        >
+            {% if match == True %}
+            <div class="alert alert-primary" role="alert">로그인 성공!</div>
+            {% elif match == None %} {% else %}
+            <div class="alert alert-danger" role="alert">
+                아이디 비밀번호를 확인해주세요!
+            </div>
+            {% endif %}
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">로그인</h2>
-                    </div>
+                <div class="mb-5">
+                    <img
+                        src="{{ url_for('static',
+                    filename='images/changuploading.png') }}"
+                    />
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="login-wrap p-0">
-                            <form method="POST" action="/" class="signin-form">
-                                <div class="form-group">
+                <div class="row justify-content-center mt-4">
+                    <div
+                        class="col-lg-8 mx-auto mbr-form"
+                        data-form-type="formoid"
+                    >
+                        <form
+                            action="/"
+                            method="POST"
+                            class="mbr-form form-with-styler"
+                            data-form-title="Form Name"
+                        >
+                            <div class="dragArea row">
+                                <div
+                                    class="col-md col-sm-12 form-group mb-3"
+                                    data-for="name"
+                                >
                                     <input
                                         type="text"
-                                        class="form-control"
                                         name="ID"
-                                        placeholder="Username"
-                                        required
-                                    />
-                                </div>
-                                <div class="form-group">
-                                    <input
-                                        id="password-field"
-                                        name="PW"
-                                        type="password"
+                                        placeholder="ID"
+                                        data-form-field="id"
                                         class="form-control"
-                                        placeholder="Password"
+                                        value=""
+                                        id="id-form02-2"
                                         required
                                     />
-                                    <span
-                                        toggle="#password-field"
-                                        class="fa fa-fw fa-eye field-icon toggle-password"
-                                    ></span>
                                 </div>
-                                <div class="form-group">
+                                <div
+                                    class="col-md col-sm-12 form-group mb-3"
+                                    data-for="email"
+                                >
+                                    <input
+                                        type="password"
+                                        name="PW"
+                                        placeholder="PASSWORD"
+                                        data-form-field="password"
+                                        class="form-control"
+                                        value=""
+                                        id="pasword-form02-2"
+                                        required
+                                    />
+                                </div>
+
+                                <div
+                                    class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn display-3"
+                                >
                                     <button
                                         type="submit"
-                                        class="form-control btn btn-primary submit px-3"
+                                        class="btn btn-primary display-2"
                                     >
                                         로그인
                                     </button>
                                 </div>
-                            </form>
-                            <a
-                                class="form-control btn btn-primary submit px-3"
-                                href="http://localhost:5010/signin"
-                                target="_blank"
-                            >
-                                회원가입
-                            </a>
-                        </div>
+                                <div
+                                    class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn"
+                                >
+                                    <a
+                                        type="button"
+                                        class="btn btn-primary display-2"
+                                        href="/signin"
+                                        target="_blank"
+                                    >
+                                        회원가입
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

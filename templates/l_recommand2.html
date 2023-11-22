@@ -1,0 +1,113 @@
+{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    {% block head %} {{ super() }}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ title }}</title>
+        <link
+            rel="shortcut icon"
+            href="{{ url_for('static',filename='images/changuploading.png') }}"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/animatecss/animate.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/theme/css/style.css')}}"
+        />
+        <link
+            rel="preload"
+            as="style"
+            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+            type="text/css"
+        />
+    </head>
+    {% endblock %} {% block body %} {{ super() }}
+    <body>
+        <section data-bs-version="5.1" class="form5 cid-tVSFAKders" id="form02-4" style="min-height: 100vh;">
+            <div class="container">
+                <a
+                                    type="button"
+                                    class="btn btn-danger"
+                                    href="/"
+                                    style="font-size: 2em"
+                                >
+                                    로그아웃
+                                </a>
+                <div class="row justify-content-center">
+                    <div class="col-12 content-head">
+                        <div class="mbr-section-head mb-5">
+                        <a href="javascript:history.back()" class="btn btn-light" style="position: absolute; left: 15px; top: -90px;">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 mt-2 display-2">
+                                <strong>{{ title }}</strong>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                        <table class="table table-bordered text-center display-7" style="table-layout: auto;">
+                            <thead class="table-active">
+                            <tr>
+                                <th>순위</th>
+                                <th>광역시도</th>
+                                <th>시군구</th>
+                                <th>읍면동</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in results%}
+                            <tr>
+                                <td>{{item[0]}}</td>
+                                <td>{{item[1]}}</td>
+                                <td>{{item[2]}}</td>
+                                <td>{{item[3]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/smoothscroll/smooth-scroll.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/mbr-switch-arrow/mbr-switch-arrow.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/theme/js/script.js')}}"></script>
+    </body>
+    {% endblock %}
+</html>

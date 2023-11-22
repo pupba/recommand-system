@@ -7,12 +7,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{ title }}</title>
         <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+            rel="shortcut icon"
+            href="{{ url_for('static',filename='images/changuploading.png') }}"
+            type="image/x-icon"
         />
         <link
             rel="stylesheet"
-            href="{{ url_for('static', filename='css/signin.css') }}"
+            href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/animatecss/animate.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{
+        url_for('static',filename='assets/theme/css/style.css')}}"
+        />
+        <link
+            rel="preload"
+            as="style"
+            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+            type="text/css"
         />
     </head>
     {% endblock %} {% block body %} {{ super() }}
@@ -24,149 +63,102 @@
             이미 아이디가 존재합니다!
         </div>
         {% endif %}
-        <section
-            class="vh-100 bg-image"
-            style="
-                background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');
-            "
-        >
-            <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-                <div class="container h-100">
-                    <div
-                        class="row d-flex justify-content-center align-items-center h-100"
-                    >
-                        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                            <div class="card" style="border-radius: 15px">
-                                <div class="card-body p-5">
-                                    <h2 class="text-uppercase text-center mb-5">
-                                        회원가입
-                                    </h2>
-
-                                    <form
-                                        method="POST"
-                                        action="/signin"
-                                        class="signin-form"
-                                    >
-                                        <div class="form-outline mb-4">
-                                            <input
-                                                type="text"
-                                                id="form3Example1cg"
-                                                class="form-control form-control-lg"
-                                                name="ID"
-                                                required
-                                            />
-                                            <label
-                                                class="form-label"
-                                                for="form3Example1cg"
-                                                >ID (*필수)</label
-                                            >
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            <input
-                                                type="password"
-                                                id="form3Example3cg"
-                                                class="form-control form-control-lg"
-                                                name="PW"
-                                                required
-                                            />
-                                            <label
-                                                class="form-label"
-                                                for="form3Example3cg"
-                                                >Password (*필수)</label
-                                            >
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            <input
-                                                type="text"
-                                                id="form3Example4cg"
-                                                class="form-control form-control-lg"
-                                                name="stock"
-                                                value=""
-                                            />
-                                            <label
-                                                class="form-label"
-                                                for="form3Example4cg"
-                                                >자본금(원)</label
-                                            >
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            <input
-                                                type="text"
-                                                id="form3Example4cdg"
-                                                class="form-control form-control-lg"
-                                                name="PB"
-                                                value=""
-                                            />
-                                            <label
-                                                class="form-label"
-                                                for="form3Example4cdg"
-                                                >선호업종</label
-                                            >
-                                        </div>
-                                        <div class="form-outline mb-4">
-                                            <input
-                                                type="text"
-                                                id="form3Example4cdg"
-                                                class="form-control form-control-lg"
-                                                name="PA"
-                                                value=""
-                                            />
-                                            <label
-                                                class="form-label"
-                                                for="form3Example4cdg"
-                                                >선호지역</label
-                                            >
-                                        </div>
-
-                                        <div
-                                            class="form-check d-flex justify-content-center mb-5"
-                                        >
-                                            <input
-                                                class="form-check-input me-2"
-                                                type="checkbox"
-                                                id="form2Example3cg"
-                                                required
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="form2Example3g"
-                                            >
-                                                I agree all statements in
-                                            </label>
-                                        </div>
-
-                                        <div
-                                            class="d-flex justify-content-center"
-                                        >
-                                            <button
-                                                type="submit"
-                                                class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                                            >
-                                                회원가입
-                                            </button>
-                                        </div>
-
-                                        <p
-                                            class="text-center text-muted mt-5 mb-0"
-                                        >
-                                            이미 회원가입 되어 있으신가요?
-                                            <a
-                                                href="http://localhost:5010/"
-                                                class="fw-bold text-body"
-                                                ><u>로그인 하러가기</u></a
-                                            >
-                                        </p>
-                                    </form>
-                                </div>
-                            </div>
+        <section data-bs-version="5.1" class="form5 cid-tVSFAKders" id="form02-4" style="min-height: 100vh;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 content-head">
+                        <div class="mbr-section-head mb-5">
+                        <a href="javascript:history.back()" class="btn btn-light" style="position: absolute; left: 15px; top: -90px;">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 mt-2 display-2">
+                                <strong>회원가입</strong>
+                            </h3>
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+                        <form action="/signin" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name">
+                                <div class="col-md col-sm-12 form-group mb-3" data-for="id">
+                                    <input type="text" name="ID" placeholder="ID" data-form-field="id" class="form-control" value="" id="id-form02-4" required>
+                                </div>
+                                <div class="col-md col-sm-12 form-group mb-3" data-for="password">
+                                    <input type="password" name="PW" placeholder="PASSWORD" data-form-field="pasword" class="form-control" value="" id="pasword-form02-4" required>
+                                </div>
+                                <div class="col-12 form-group mb-3" data-for="seed_money">
+                                    <input type="text" name="SM" placeholder="SEED MONEY" data-form-field="seed_money" class="form-control" value="" id="seed_money-form02-4" required>
+                                </div>
+                                <div class="col-12 form-group mb-3" data-for="b_business_type">
+                                    <select name="biz" data-form-field="b_business_type" class="form-control select-small" id="b_business_type-form02-4" required>
+                                        {% for group,options in bizdic.items() %}
+                                        <optgroup label="{{ group }}">
+                                            {% for option in options %}
+                                                <option value="{{ group }}-{{ option }}">{{ option }}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-12 form-group mb-3" data-for="m_business_type">
+                                    <select name="gcd" data-form-field="m_business_type" class="form-control" id="gcds-form" required>
+                                        {% for gcd in gcds %}
+                                        <option value="{{gcd}}">{{gcd}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-12 form-group mb-3" data-for="m_business_type">
+                                    <select name="sgg" data-form-field="m_business_type" class="form-control" id="sggs-form" required>
+                                        <option value="">시군구 선택</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 form-group mb-3" data-for="m_business_type">
+                                    <select name="emd" data-form-field="m_business_type" class="form-control" id="emds-form" required>
+                                        <option value="">읍면동 선택</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                                    <button type="submit" class="btn btn-primary display-7">회원가입</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </section>
+        <script>
+            const gcdSelect = document.getElementById('gcds-form');
+            const sggSelect = document.getElementById('sggs-form');
+            const emdSelect = document.getElementById('emds-form');
+
+            // sggs
+            gcdSelect.addEventListener('change',()=>{
+                let selectedGcd = gcdSelect.value;
+                let sggOptions = JSON.parse('{{sggs | tojson}}');
+                sggSelect.innerHTML = "<option value=''>시군구 선택</option>";
+                sggOptions[selectedGcd].forEach(element => {
+                    let option = document.createElement("option");
+                    option.value=element;
+                    option.text = element;
+                    sggSelect.appendChild(option);
+                });
+            });
+            //emd
+            sggSelect.addEventListener('change',()=>{
+                let selectedSgg = sggSelect.value;
+                let emdOptions = JSON.parse('{{emds | tojson}}');
+                emdSelect.innerHTML = "<option value=''>읍면동 선택</option>";
+                emdOptions[selectedSgg].forEach(element => {
+                    let option = document.createElement("option");
+                    option.value=element;
+                    option.text = element;
+                    emdSelect.appendChild(option);
+                });
+            });
+        </script>
+        <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/smoothscroll/smooth-scroll.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/mbr-switch-arrow/mbr-switch-arrow.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/theme/js/script.js')}}"></script>
     </body>
     {% endblock %}
 </html>

@@ -91,33 +91,35 @@
                     </tr>
                     {% endfor %}
                 </table>
-                {% endfor %} {% for t in result2 %}
+                {% endfor %}
+                <div id="imageResult" class="mb-5">
+                    <h3>결제 건수</h3>
+                    <img
+                        src="{{ url_for('static',filename='results/biz/결제건수.png') }}"
+                        alt="이미지 결과"
+                    />
+                </div>
+                <div id="imageResult" class="mb-5">
+                    <h3>결제 금액</h3>
+                    <img
+                        src="{{ url_for('static',filename='results/biz/결제금액.png') }}"
+                        alt="이미지 결과"
+                    />
+                </div>
+                {% for t in result2 %}
                 <caption>
                     <h3>{{t[0]}}</h3>
                 </caption>
                 <table class="table mb-5">
                     {% for index, value in t[1].items() %}
                     <tr>
+                        <p>{{index}},{{value}}</p>
                         <th>{{ index }}</th>
                         <td>{{ value }}</td>
                     </tr>
                     {% endfor %}
                 </table>
                 {% endfor %}
-            </div>
-            <div id="imageResult" class="mb-5">
-                <h3>결제 건수</h3>
-                <img
-                    src="{{ url_for('static',filename='analysis/biz/결제건수.png')}}"
-                    alt="이미지 결과"
-                />
-            </div>
-            <div id="imageResult" class="mb-5">
-                <h3>결제 금액</h3>
-                <img
-                    src="{{ url_for('static',filename='analysis/biz/결제건수.png')}}"
-                    alt="이미지 결과"
-                />
             </div>
         </div>
         <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

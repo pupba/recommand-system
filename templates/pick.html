@@ -12,6 +12,11 @@
             content="width=device-width, initial-scale=1, minimum-scale=1"
         />
         <link
+            rel="shortcut icon"
+            href="{{ url_for('static',filename='images/changuploading.png') }}"
+            type="image/x-icon"
+        />
+        <link
             rel="stylesheet"
             href="{{ url_for('static', filename='css/pick.css') }}"
         />
@@ -99,7 +104,7 @@
                                     id="title"
                                     class="mbr-section-title mb-2 display-2"
                                 >
-                                    창업추천 시스템
+                                    창UP!히히
                                 </h3>
                             </div>
                             <div
@@ -127,7 +132,7 @@
                                             <h6
                                                 class="panel-title-edit mbr-semibold mbr-fonts-style mb-0 display-5"
                                             >
-                                                사용자 : {{ data[0]
+                                                사용자 : {{ data['기본정보'][0]
                                                 }}&nbsp;&nbsp;
                                             </h6>
                                             <span
@@ -147,9 +152,15 @@
                                             <p
                                                 class="mbr-fonts-style panel-text display-7"
                                             >
-                                                자본금 : {{ data[1] }}&nbsp;<br />선호
-                                                업종 : {{ data[2] }}<br />선호
-                                                지역 : {{ data[3] }}
+                                                자본금 : {{ data['기본정보'][1]
+                                                }}&nbsp;<br />선호 업종 : {{
+                                                data['기본정보'][2] }}<br />선호
+                                                지역 : {{ data['기본정보'][3]
+                                                }}<br />
+                                                최다 검색 업종 :
+                                                {{data['추가정보'][0]}}<br />
+                                                최다 검색 지역 :
+                                                {{data['추가정보'][1]}}
                                             </p>
                                         </div>
                                     </div>
@@ -178,18 +189,16 @@
                                         role="tab"
                                         id="headingOne"
                                     >
-                                        <a
-                                            role="button"
-                                            class="panel-title collapsed"
-                                            href="/"
-                                        >
-                                            <h6
-                                                id="btn1"
-                                                class="panel-title-edit mbr-semibold mbr-fonts-style mb-0 display-5"
-                                            >
-                                                추천
-                                            </h6>
-                                        </a>
+                                        <a href="/b-recommand-1?ID={{data['기본정보'][0]}}">업종 추천</a>
+                                    </div>
+                                </div>
+                                <div class="card mb-3">
+                                    <div
+                                        class="card-header"
+                                        role="tab"
+                                        id="headingOne"
+                                    >
+                                        <a href="/l-recommand-1?ID={{data['기본정보'][0]}}">상권 추천</a>
                                     </div>
                                 </div>
                             </div>
@@ -205,58 +214,6 @@
             once="footers"
             id="footer03-3"
         >
-            <div class="container">
-                <div class="row">
-                    <div class="row-links mb-4">
-                        <ul class="header-menu">
-                            <li
-                                class="header-menu-item mbr-fonts-style display-5"
-                            >
-                                <a
-                                    href="index.html#features04-3"
-                                    class="text-primary"
-                                    >Classes</a
-                                >
-                            </li>
-                            <li
-                                class="header-menu-item mbr-fonts-style display-5"
-                            >
-                                <a
-                                    href="index.html#features04-5"
-                                    class="text-primary"
-                                    >Shop</a
-                                >
-                            </li>
-                            <li
-                                class="header-menu-item mbr-fonts-style display-5"
-                            >
-                                <a
-                                    href="index.html#list01-8"
-                                    class="text-primary"
-                                    >FAQ</a
-                                >
-                            </li>
-                            <li
-                                class="header-menu-item mbr-fonts-style display-5"
-                            >
-                                <a
-                                    href="index.html#people03-7"
-                                    class="text-primary"
-                                    >Team</a
-                                >
-                            </li>
-                            <li
-                                class="header-menu-item mbr-fonts-style display-5"
-                            >
-                                <a
-                                    href="index.html#contacts3-1"
-                                    class="text-primary"
-                                    >Contacts</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-
                     <div class="col-12">
                         <div class="social-row">
                             <div class="soc-item">
@@ -287,18 +244,11 @@
                                     ></span>
                                 </a>
                             </div>
-                            <div class="soc-item">
-                                <a href="https://mobiri.se/" target="_blank">
-                                    <span
-                                        class="mbr-iconfont socicon-messenger socicon"
-                                    ></span>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     <div class="col-12 mt-5">
                         <p class="mbr-fonts-style copyright display-7">
-                            © Copyright 2030 Mobirise - All Rights Reserved
+                            © Copyright 2023 Pupba - All Rights Reserved
                         </p>
                     </div>
                 </div>

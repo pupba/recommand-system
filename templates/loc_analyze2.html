@@ -14,7 +14,6 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='css/pick.css') }}"
         />
-        <meta name="description" content="" />
 
         <title>{{ title }}</title>
         <link
@@ -51,17 +50,6 @@
         />
         <link
             rel="preload"
-            href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
-            as="style"
-            onload="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript
-            ><link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
-        /></noscript>
-        <link
-            rel="preload"
             as="style"
             href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
         />
@@ -83,6 +71,14 @@
                 <caption>
                     <h3>{{ k }}</h3>
                 </caption>
+                <div id="imageResult" class="mb-5">
+                    <img
+                        src="{{ url_for('static', filename='results/loc/' +
+                    k.split()[0] + ('_대분류.png' if '대분류' in k else '_중분류.png')) }}"
+                        alt="이미지 결과"
+                        class="mb-5"
+                    />
+                </div>
                 <table class="table">
                     <tr>
                         <th>지역</th>
@@ -93,6 +89,7 @@
                         {% endif %}
                     </tr>
                     {% for value in v %}
+                    <p>{{value}}</p>
                     <tr>
                         <td>{{value[0]}}</td>
                         {% if "금액" in k%}
@@ -109,7 +106,7 @@
                 {% for i in filenames %}
                 <h3>{{i[:-4]}}</h3>
                 <img
-                    src="{{ url_for('static', filename='analysis/loc/' + i) }}"
+                    src="{{ url_for('static', filename='results/loc/' + i) }}"
                     alt="이미지 결과"
                     class="mb-5"
                 />

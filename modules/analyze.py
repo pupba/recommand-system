@@ -8,6 +8,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 # mac m1 gpu 에러해결을 위한 코드
 import matplotlib
+from flask import url_for
 matplotlib.use('agg')
 # 업종코드 매핑을 위해 import
 font_prop = FontProperties(fname='./static/font/nexon.ttf')
@@ -200,11 +201,11 @@ class Analysis:
             if idx == 1:
                 figs[0].tight_layout()
                 figs[0].savefig(
-                    f"/Users/pupba/Desktop/EntrepreneurialAid/static/anlaysis/loc/{title.split()[0]}_{'대분류'}.png")
+                    f"./static/results/loc/{title.split()[0]}_{'대분류'}.png")
             if idx == 3:
                 figs[1].tight_layout()
                 figs[1].savefig(
-                    f"/Users/pupba/Desktop/EntrepreneurialAid/static/anlaysis/loc/{title.split()[0]}_{'중분류'}.png")
+                    f"./static/results/loc/{title.split()[0]}_{'중분류'}.png")
                 plots[0].cla()
                 plots[1].cla()
                 plots[2].cla()
@@ -232,11 +233,13 @@ class Analysis:
                 if idx == 1:
                     fig1.tight_layout()
                     fig1.savefig(
-                        f"/Users/pupba/Desktop/EntrepreneurialAid/static/anlaysis/biz/{'결제건수'}.png")
+                        f"./static/results/biz/{'결제건수'}.png"
+                    )
                 if idx == 3:
                     fig2.tight_layout()
                     fig2.savefig(
-                        f"/Users/pupba/Desktop/EntrepreneurialAid/static/anlaysis/biz/{'결제금액'}.png")
+                        f"./static/results/biz/{'결제금액'}.png"
+                    )
         else:
             for doe in self.__l_result:
                 for idx, (title, data) in enumerate(doe.items()):

@@ -19,8 +19,21 @@ class Signin:
         else:  # 아이디가 있음
             return False
 
-    def signin(self, ID, PW, stock, PB, PA) -> None:
-        sql = f"INSERT INTO user_info (ID, PW, Equity, PreArea, PreBus) VALUES (%s,%s,%s,%s,%s)"
-        values = (ID, PW, stock, PB, PA)
+    def signin(self, ID, PW, stock, PB, PA, AS, BS) -> None:
+        sql = f"INSERT INTO user_info (ID, PW, Equity, PreArea, PreBus,AreaSearch,BusSearch) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        values = (ID, PW, stock, PB, PA, AS, BS)
         self.cursor.execute(sql, values)
         self.conn.commit()
+        sql = "INSERT INTO history(user_id, type, value) VALUES (%s,%s,%s)"
+        values1 = (ID, 0, AS)
+        values2 = (ID, 1, BS)
+        self.cursor.execute(sql, values1)
+        self.conn.commit()
+        self.cursor.execute(sql, values2)
+        self.conn.commit()
+        sql = "INSERT INTO major_anal(stock,pre_major,pre_location,search_major) VALUES (%s,%s,%s,%s)"
+        value = (stock, PB, PA, BS)
+        self.cursor.execute(sql, value)
+        sql = "INSERT INTO loc_anal(stock,pre_major,pre_location,search_location) VALUES (%s,%s,%s,%s)"
+        value = (stock, PB, PA, AS)
+        self.cursor.execute(sql, value)
