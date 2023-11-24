@@ -1,144 +1,77 @@
 {% extends "bootstrap/base.html" %}
 <!DOCTYPE html>
 <html lang="en">
-    {% block head %} {{ super() }}
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="generator" content="Mobirise v5.9.6, mobirise.com" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, minimum-scale=1"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/pick.css') }}"
-        />
-        <meta name="description" content="" />
+{% block head %} {{ super() }}
 
-        <title>{{ title }}</title>
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/animatecss/animate.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}"
-        />
-        <link
-            rel="shortcut icon"
-            href="{{ url_for('static',filename='images/changuploading.png') }}"
-            type="image/x-icon"
-        />
-        <link
-            rel="stylesheet"
-            href="{{
-        url_for('static',filename='assets/theme/css/style.css')}}"
-        />
-        <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
-            as="style"
-            onload="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript
-            ><link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
-        /></noscript>
-        <link
-            rel="preload"
-            as="style"
-            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
-            type="text/css"
-        />
-    </head>
-    {% endblock %} {% block body %} {{ super() }}
-    <body>
-        <button class="btn btn-secondary" type="button" onclick="">
-            뒤로 가기
-        </button>
-        <div class="container">
-            <a
-                type="button"
-                class="btn btn-danger"
-                href="/ind-analyze-1"
-                style="font-size: 2em"
-            >
-                뒤로가기
-            </a>
-            <h1 class="text-center mb-5 mt-5 title">{{title}}</h1>
-            <div id="textResult" class="mb-5">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container">
-                        <ul
-                            class="navbar-nav d-flex justify-content-between flex-wrap"
-                        >
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    id="paymentCountLink"
-                                    href="#"
-                                    >결제건수</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    id="paymentAmountLink"
-                                    href="#"
-                                    >결제금액</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    id="incomeRangeLink"
-                                    href="#"
-                                    >소득구간</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="ageGroupLink" href="#"
-                                    >연령대</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <div class="mb-5" id="content"></div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="generator" content="Mobirise v5.9.6, mobirise.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pick.css') }}" />
+    <meta name="description" content="" />
+
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/web/assets/mobirise-icons2/mobirise2.css')}}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/bootstrap/css/bootstrap-grid.min.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap-reboot.min.css')}}" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/animatecss/animate.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/socicon/css/styles.css')}}" />
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/changuploading.png') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{
+        url_for('static',filename='assets/theme/css/style.css')}}" />
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" />
+    </noscript>
+    <link rel="preload" as="style" href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/mobirise/css/mbr-additional.css')}}"
+        type="text/css" />
+</head>
+{% endblock %} {% block body %} {{ super() }}
+
+<body>
+    <div class="container">
+        <a type="button" class="btn btn-danger" href="/ind-analyze-1" style="font-size: 2em">
+            뒤로가기
+        </a>
+        <h1 class="text-center mb-5 mt-5 title">{{title}}</h1>
+        <div id="textResult" class="mb-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <ul class="navbar-nav d-flex justify-content-between flex-wrap">
+                        <li class="nav-item">
+                            <a class="nav-link" id="paymentCountLink" href="#">결제건수</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="paymentAmountLink" href="#">결제금액</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="incomeRangeLink" href="#">소득구간</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="ageGroupLink" href="#">연령대</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <script>
-            // 결제건수 버튼 클릭 시
-            document
-                .getElementById("paymentCountLink")
-                .addEventListener("click", () => {
-                    // 네비게이션 바 아래의 내용을 업데이트
-                    document.getElementById("content").innerHTML = `
+        <div class="mb-5" id="content"></div>
+    </div>
+    <script>
+        // 결제건수 버튼 클릭 시
+        document
+            .getElementById("paymentCountLink")
+            .addEventListener("click", () => {
+                // 네비게이션 바 아래의 내용을 업데이트
+                document.getElementById("content").innerHTML = `
                 <caption>
                     <h3 class="display-3">{{ result1[1][0] }}</h3>
                 </caption>
@@ -176,32 +109,32 @@
                 </div>
               `;
 
-                    // 더보기 버튼 클릭 시
-                    document
-                        .getElementById("toggleMoreButton1")
-                        .addEventListener("click", () => {
-                            var additionalContent =
-                                document.getElementById("additionalContent1");
-                            if (additionalContent.style.display === "none") {
-                                additionalContent.style.display = "block";
-                                document.getElementById(
-                                    "toggleMoreButton1"
-                                ).textContent = "닫기";
-                            } else {
-                                additionalContent.style.display = "none";
-                                document.getElementById(
-                                    "toggleMoreButton1"
-                                ).textContent = "더보기";
-                            }
-                        });
-                });
+                // 더보기 버튼 클릭 시
+                document
+                    .getElementById("toggleMoreButton1")
+                    .addEventListener("click", () => {
+                        var additionalContent =
+                            document.getElementById("additionalContent1");
+                        if (additionalContent.style.display === "none") {
+                            additionalContent.style.display = "block";
+                            document.getElementById(
+                                "toggleMoreButton1"
+                            ).textContent = "닫기";
+                        } else {
+                            additionalContent.style.display = "none";
+                            document.getElementById(
+                                "toggleMoreButton1"
+                            ).textContent = "더보기";
+                        }
+                    });
+            });
 
-            // 결제금액 버튼 클릭 시
-            document
-                .getElementById("paymentAmountLink")
-                .addEventListener("click", function () {
-                    // 네비게이션 바 아래의 내용을 업데이트
-                    document.getElementById("content").innerHTML = `
+        // 결제금액 버튼 클릭 시
+        document
+            .getElementById("paymentAmountLink")
+            .addEventListener("click", function () {
+                // 네비게이션 바 아래의 내용을 업데이트
+                document.getElementById("content").innerHTML = `
                     <caption>
                         <h3 class="display-3">{{ result1[3][0] }}</h3>
                     </caption>
@@ -239,32 +172,32 @@
                     </div>
               `;
 
-                    // 더보기 버튼 클릭 시
-                    document
-                        .getElementById("toggleMoreButton2")
-                        .addEventListener("click", () => {
-                            var additionalContent =
-                                document.getElementById("additionalContent2");
-                            if (additionalContent.style.display === "none") {
-                                additionalContent.style.display = "block";
-                                document.getElementById(
-                                    "toggleMoreButton2"
-                                ).textContent = "닫기";
-                            } else {
-                                additionalContent.style.display = "none";
-                                document.getElementById(
-                                    "toggleMoreButton2"
-                                ).textContent = "더보기";
-                            }
-                        });
-                });
+                // 더보기 버튼 클릭 시
+                document
+                    .getElementById("toggleMoreButton2")
+                    .addEventListener("click", () => {
+                        var additionalContent =
+                            document.getElementById("additionalContent2");
+                        if (additionalContent.style.display === "none") {
+                            additionalContent.style.display = "block";
+                            document.getElementById(
+                                "toggleMoreButton2"
+                            ).textContent = "닫기";
+                        } else {
+                            additionalContent.style.display = "none";
+                            document.getElementById(
+                                "toggleMoreButton2"
+                            ).textContent = "더보기";
+                        }
+                    });
+            });
 
-            // 소득구간 버튼 클릭 시
-            document
-                .getElementById("incomeRangeLink")
-                .addEventListener("click", function () {
-                    // 네비게이션 바 아래의 내용을 업데이트
-                    document.getElementById("content").innerHTML = `
+        // 소득구간 버튼 클릭 시
+        document
+            .getElementById("incomeRangeLink")
+            .addEventListener("click", function () {
+                // 네비게이션 바 아래의 내용을 업데이트
+                document.getElementById("content").innerHTML = `
                     <caption>
                         <h3 class="display-3">{{ result2[0][0] }}</h3>
                     </caption>
@@ -281,14 +214,14 @@
                         {% endfor %}
                     </table>
               `;
-                });
+            });
 
-            // 연령대 버튼 클릭 시
-            document
-                .getElementById("ageGroupLink")
-                .addEventListener("click", function () {
-                    // 네비게이션 바 아래의 내용을 업데이트
-                    document.getElementById("content").innerHTML = `
+        // 연령대 버튼 클릭 시
+        document
+            .getElementById("ageGroupLink")
+            .addEventListener("click", function () {
+                // 네비게이션 바 아래의 내용을 업데이트
+                document.getElementById("content").innerHTML = `
                 <table>
                     <caption style="display: flex;flex-direction: row;">
                         <h3 class="display-3">{{ result2[1][0] }}</h3>
@@ -307,13 +240,14 @@
                     </table>
                 </table>
               `;
-                });
-        </script>
-        <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{ url_for('static',filename='assets/smoothscroll/smooth-scroll.js')}}"></script>
-        <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
-        <script src="{{ url_for('static',filename='assets/mbr-switch-arrow/mbr-switch-arrow.js')}}"></script>
-        <script src="{{ url_for('static',filename='assets/theme/js/script.js')}}"></script>
-    </body>
-    {% endblock %}
+            });
+    </script>
+    <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/smoothscroll/smooth-scroll.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/ytplayer/index.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/mbr-switch-arrow/mbr-switch-arrow.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/theme/js/script.js')}}"></script>
+</body>
+{% endblock %}
+
 </html>
