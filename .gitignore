@@ -1,4 +1,4 @@
 /database
 /modules/secret.py
 input.py
-*.xlsx
+.DS_Store
